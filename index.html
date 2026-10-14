@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<!-- saved from url=(0063)file:///Users/mathismarchand/Downloads/challenge-rse%20(9).html -->
+<html lang="fr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Challenge RSE</title>
+<script src="./index_files/xlsx.full.min.js"></script>
+<script src="./index_files/supabase-js@2"></script>
+<style>
+:root{--g:#1f7a4d;--g2:#3aa574;--gd:#12472c;--gl:#e6f2ea;--bg:#f4f7f5;--t:#1c2b23;--m:#5f6f66;--l:#d9e3dd;--r:#b3382c}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;font-family:"Avenir Next","Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--t);line-height:1.45}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+header{background:var(--gd);color:#fff;padding-top:24px}
+h1{margin:0;font-size:2rem;letter-spacing:-.02em}
+header p{margin:4px 0 0;opacity:.9}
+.period{display:inline-block;margin-top:10px;background:rgba(255,255,255,.14);padding:3px 12px;border-radius:99px;font-size:.82rem}
+nav{display:flex;gap:6px;margin-top:18px}
+nav button{border:0;background:rgba(255,255,255,.12);color:#fff;padding:10px 22px;border-radius:10px 10px 0 0;font:inherit;cursor:pointer}
+nav button.on{background:var(--bg);color:var(--gd);font-weight:700}
+main{padding-top:20px;padding-bottom:48px}
+.card{background:#fff;border:1px solid var(--l);border-radius:12px;padding:18px;margin-bottom:16px;animation:in .5s ease both}
+@keyframes in{from{opacity:0}}
+.grid{display:grid;gap:16px;grid-template-columns:5fr 6fr;align-items:start}
+@media(max-width:820px){.grid{grid-template-columns:1fr}}
+h2{margin:0 0 12px;font-size:1.05rem;color:var(--gd)}
+small,.mut{color:var(--m)}
+.btn{border:0;border-radius:9px;padding:10px 16px;font:inherit;font-weight:600;cursor:pointer;background:var(--g);color:#fff}
+.btn:hover{background:var(--gd)}.btn.big{width:100%;padding:15px;font-size:1.05rem;margin-bottom:16px}
+.btn.o{background:#fff;color:var(--g);border:1px solid var(--g)}.btn.o:hover{background:var(--gl)}
+.btn.r{background:var(--r)}.btn.s{padding:6px 10px;font-size:.8rem;margin:2px 0}
+:focus-visible{outline:3px solid var(--g2);outline-offset:2px}
+.bar{height:10px;background:var(--gl);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--g);border-radius:99px;transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.pts{font-size:2.6rem;font-weight:700;color:var(--gd);line-height:1.1}
+.lb{display:grid;grid-template-columns:34px 1fr auto;column-gap:8px;align-items:center;padding:7px 8px;border-radius:9px}
+.lb.me{background:var(--gl)}.lb .rk{grid-row:span 2;text-align:center;font-size:1.15rem}.lb .bar{grid-column:2/4;height:8px;margin-top:3px}
+.row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--l);font-size:.9rem}
+.scroll{max-height:300px;overflow:auto}
+.badge{display:inline-block;padding:2px 10px;border-radius:99px;font-size:.78rem;font-weight:600;white-space:nowrap}
+.pending{background:#fdf0d5;color:#8a5300}.validated{background:#d9f0e2;color:#14683c}.rejected{background:#f8dedb;color:#9c2b20}
+.chip{display:inline-block;background:var(--gl);color:var(--gd);border-radius:8px;padding:4px 10px;margin:0 6px 6px 0;font-size:.82rem}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}
+.st{background:#fff;border:1px solid var(--l);border-radius:12px;padding:14px;animation:in .5s ease both}
+.st b{display:block;font-size:1.8rem;color:var(--gd)}.st.w{border-color:#e6b35c}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.88rem}
+th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--l);vertical-align:top}th{color:var(--m);font-weight:600}
+.flt-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}.flt-row>*{flex:1 1 150px}
+label{display:block;font-size:.82rem;color:var(--m);margin:12px 0 4px}
+input,select,textarea{width:100%;padding:10px;border:1px solid var(--l);border-radius:8px;font:inherit;background:#fff}
+dialog{border:0;border-radius:14px;padding:22px;width:min(480px,94vw)}dialog::backdrop{background:rgba(10,30,20,.45)}
+.btns{display:flex;gap:10px;margin-top:18px}
+#toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,16px);background:var(--gd);color:#fff;padding:12px 20px;border-radius:10px;opacity:0;transition:.3s;pointer-events:none;max-width:92vw;z-index:9}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.grid>.card{margin-bottom:0}
+.ms{position:absolute;top:-3px;transform:translateX(-50%);text-align:center}
+.ms b{display:block;width:16px;height:16px;border-radius:50%;background:#fff;border:2px solid var(--l);margin:0 auto}
+.ms.on b{background:var(--g);border-color:var(--g)}.ms small{display:block;margin-top:4px;font-size:.72rem}
+#plant svg{width:100%;height:auto;max-height:560px;display:block}
+#plant,#profile{display:flex;flex-direction:column}#profile{justify-content:space-between}.grid{align-items:stretch}
+.pop{animation:pop .9s ease}@keyframes pop{40%{transform:scale(1.07);filter:drop-shadow(0 0 14px var(--g2))}}
+.ring{fill:none;stroke:var(--g2);stroke-width:3;transform-origin:150px 250px;animation:ring 1.2s ease-out forwards}@keyframes ring{from{opacity:.8;transform:scale(.2)}to{opacity:0;transform:scale(2.4)}}
+.fh{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.fsteps{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.fs{background:var(--bg);border:1px solid var(--l);border-radius:12px;padding:14px 16px 18px;transition:border-color .2s,box-shadow .2s}
+.fs:focus-within{border-color:var(--g);box-shadow:0 0 0 3px var(--gl)}
+.fl{display:flex;align-items:center;gap:10px;font-weight:600;color:var(--gd);font-size:.95rem}
+.fn{width:24px;height:24px;border-radius:50%;background:var(--g);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:.8rem;flex:none}
+.fa{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-top:16px}
+#dlg.flash{animation:flash 1.4s ease}@keyframes flash{30%{box-shadow:0 0 0 4px var(--gl);border-color:var(--g)}}
+@media(max-width:560px){.fa .btn{width:100%}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <h1>🌱 Challenge des Facilitateurs Impact</h1>
+  <p>Chaque action compte. Chaque point fait avancer le collectif.</p>
+  <span class="period"></span>
+  <nav><button data-tab="challenge" class="on">🏆 Challenge</button><button data-tab="admin">🔐 Admin</button></nav>
+</div></header>
+
+<main class="wrap">
+<div class="card" id="notice" hidden=""><small id="noticeMsg"></small> <button class="btn o s" id="retry" hidden="">Réessayer</button></div>
+<div id="app">
+<section id="challenge">
+  <div class="grid">
+    <div class="card" id="profile"><div><label for="me" style="margin-top:0">Participant</label><select id="me"><option value="1" selected="">Facilitateur #1</option><option value="2">Facilitateur #2</option><option value="3">Facilitateur #3</option><option value="4">Facilitateur #4</option><option value="5">Facilitateur #5</option><option value="6">Facilitateur #6</option><option value="7">Facilitateur #7</option><option value="8">Facilitateur #8</option><option value="9">Facilitateur #9</option><option value="10">Facilitateur #10</option><option value="11">Facilitateur #11</option><option value="12">Facilitateur #12</option><option value="13">Facilitateur #13</option><option value="14">Facilitateur #14</option><option value="15">Facilitateur #15</option><option value="16">Facilitateur #16</option></select></div>
+    <div style="text-align:center;padding:14px 0"><h2 style="margin:0;font-size:1.5rem">Facilitateur #1</h2><div class="pts" style="font-size:3.2rem">#1/16</div><small>au classement</small></div>
+    <div style="text-align:center"><b>Terre à semer</b></div>
+    <button class="btn big" id="addBtn" type="button" style="margin-bottom:0">＋ Ajouter une action</button></div>
+    <div class="card" id="plant"><h2>🌱 Ma plante</h2><div id="plantArt" style="flex:1"><svg viewBox="0 0 300 340" role="img" aria-label="Plante en croissance" data-visual="seed" data-t="0.00"><rect width="300" height="340" rx="14" fill="var(--gl)"></rect><ellipse cx="150" cy="298" rx="125" ry="14" fill="#8b6b4a" opacity=".35"></ellipse><ellipse cx="150" cy="284.68" rx="7.22" ry="5.32" fill="#6b4f35"></ellipse></svg></div>
+    <div style="text-align:center;margin-top:10px"><b>Terre à semer</b><br><small>Prochain niveau : Graine à 100 points</small></div></div>
+  </div>
+  <div class="card" id="dash"><h2>Mon tableau de bord</h2>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:8px"><div><small>Niveau actuel</small><br><b style="font-size:1.2rem">Terre à semer</b></div>
+    <div class="pts" style="font-size:2.2rem"><span id="pp">0</span> <small style="font-size:1rem;font-weight:400">points validés</small></div></div>
+    <div style="position:relative;margin:14px 14px 38px"><div class="bar"><i data-w="0" style="width: 0%;"></i></div><span class="ms" style="left:20%"><b></b><small>🌱 100</small></span><span class="ms" style="left:40%"><b></b><small>🌿 200</small></span><span class="ms" style="left:60%"><b></b><small>🌳 300</small></span><span class="ms" style="left:100%"><b></b><small>🌲 500</small></span></div>
+    <small>100 points avant Graine (100 pts)</small>
+    <div class="stats" style="margin:14px 0 0"><div class="st ">📝 <small>Actions déclarées</small><b>0</b></div><div class="st ">✅ <small>Actions validées</small><b>0</b></div><div class="st w">⏳ <small>Actions en attente</small><b>0</b></div><div class="st ">❌ <small>Actions refusées</small><b>0</b></div></div>
+    <h2 style="margin:16px 0 4px">Mes actions</h2><div class="tw scroll" id="mine"><small>Aucune action validée pour le moment.</small></div></div>
+  <div class="card"><h2>Actions disponibles</h2><div id="catalog"><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:0 28px"><div><small><b>Sensibiliser</b></small><div class="row"><div>Présenter un sujet Impact en comité, réunion de secteur ou chez un client<br><small>Conditions à définir</small></div><div><b>+15</b></div></div><div class="row"><div>Animer un atelier ou une sensibilisation locale<br><small>Conditions à définir</small></div><div><b>+15</b></div></div></div><div><small><b>Déployer</b></small><div class="row"><div>Mettre en place une action anti-gaspillage sur site<br><small>Conditions à définir</small></div><div><b>+25</b></div></div><div class="row"><div>Déployer une animation à impact sur site : Opération Stop Hunger, Aïda, SPS<br><small>Conditions à définir</small></div><div><b>+25</b></div></div><div class="row"><div>Mettre en œuvre une action de suppression des bouteilles plastiques sur site<br><small>Conditions à définir</small></div><div><b>+25</b></div></div></div><div><small><b>Partager</b></small><div class="row"><div>Obtenir 100% de réponse à la campagne 2027 SEA<br><small>Conditions à définir</small></div><div><b>+15</b></div></div><div class="row"><div>Créer et partager une bonne pratique ou un retour d'expérience<br><small>Partage ou création d'une fiche impact avec action, process et résultat (ou objectif). Relai par Teams, mail...</small></div><div><b>+10</b></div></div></div><div><small><b>Rayonner</b></small><div class="row"><div>Valoriser une initiative via un support de communication local<br><small>Conditions à définir</small></div><div><b>+15</b></div></div><div class="row"><div>Obtenir un témoignage client ou une mise en avant d'une action à impact<br><small>Conditions à définir</small></div><div><b>+25</b></div></div><div class="row"><div>Intervenir lors d'un événement, convention ou webinaire<br><small>Conditions à définir</small></div><div><b>+20</b></div></div></div></div></div></div>
+  <div class="card" id="dlg"><form id="frm">
+    <div class="fh"><h2 style="margin:0">＋ Déclarer une action</h2><small>Trois étapes rapides — l'action est comptabilisée après validation.</small></div>
+    <div class="fsteps">
+      <div class="fs" role="group" aria-labelledby="fs1"><div class="fl" id="fs1"><span class="fn">1</span>Choisir l'action</div>
+        <div><label for="fpart">Participant</label><select id="fpart" required=""><option value="1" selected="">Facilitateur #1</option><option value="2">Facilitateur #2</option><option value="3">Facilitateur #3</option><option value="4">Facilitateur #4</option><option value="5">Facilitateur #5</option><option value="6">Facilitateur #6</option><option value="7">Facilitateur #7</option><option value="8">Facilitateur #8</option><option value="9">Facilitateur #9</option><option value="10">Facilitateur #10</option><option value="11">Facilitateur #11</option><option value="12">Facilitateur #12</option><option value="13">Facilitateur #13</option><option value="14">Facilitateur #14</option><option value="15">Facilitateur #15</option><option value="16">Facilitateur #16</option></select></div>
+        <div><label for="fsub">Sous-thème</label><select id="fsub" required=""><option>Sensibiliser</option><option>Déployer</option><option>Partager</option><option>Rayonner</option></select></div>
+        <div><label for="fact">Action réalisée</label><select id="fact" required=""><option value="1">Présenter un sujet Impact en comité, réunion de secteur ou chez un client — +15 points</option><option value="2">Animer un atelier ou une sensibilisation locale — +15 points</option></select></div></div>
+      <div class="fs" role="group" aria-labelledby="fs2"><div class="fl" id="fs2"><span class="fn">2</span>Date et précisions</div>
+        <div><label for="fdate">Date de réalisation</label><input type="date" id="fdate" required=""></div>
+        <div><label for="fcom">Commentaire (facultatif)</label><textarea id="fcom" rows="3"></textarea></div></div>
+      <div class="fs" role="group" aria-labelledby="fs3"><div class="fl" id="fs3"><span class="fn">3</span>Informations sur le périmètre de l'action réalisée</div>
+        <div><label for="ffr">Code FR</label><input type="text" id="ffr"><small>Facultatif</small></div></div>
+    </div>
+    <div class="fa"><small>Les points sont attribués après validation par l'administrateur.</small><button class="btn" type="submit">Soumettre mon action</button></div>
+  </form></div>
+</section>
+
+<section id="admin" hidden="">
+  <div class="card" id="adminGate">
+    <h2>🔐 Espace administrateur</h2>
+    <p class="mut">Zone réservée à l'animateur du challenge : validation des actions, suivi et statistiques.</p>
+    <form id="gateForm"><label for="code">Code d'accès</label><input type="password" id="code" autocomplete="off" required=""><small id="gateErr" style="display:block;min-height:1.3em;margin-top:6px;color:var(--r)"></small><div class="btns" style="margin-top:8px"><button class="btn" type="submit">Accéder à l'espace Admin</button></div></form>
+  </div>
+  <div id="adminBody" hidden="">
+    <div style="margin-bottom:16px"><button class="btn" id="export">📊 Exporter sous Excel</button></div>
+    <div class="stats" id="stats"></div>
+    <div class="card"><h2>📝 Actions à valider (<span id="todoCount">0</span>)</h2>
+      <div class="tw"><table><thead><tr><th>Facilitateur</th><th>Sous-thème</th><th>Action</th><th>Date</th><th>Points</th><th>Statut</th><th>Actions</th></tr></thead><tbody id="todo"></tbody></table></div></div>
+    <div class="card"><h2>🗂️ Historique des actions <small id="histCount"></small></h2>
+      <div class="flt-row">
+        <select id="fP" class="flt" aria-label="Participant"><option value="">Tous les participants</option><option value="1">Facilitateur #1</option><option value="2">Facilitateur #2</option><option value="3">Facilitateur #3</option><option value="4">Facilitateur #4</option><option value="5">Facilitateur #5</option><option value="6">Facilitateur #6</option><option value="7">Facilitateur #7</option><option value="8">Facilitateur #8</option><option value="9">Facilitateur #9</option><option value="10">Facilitateur #10</option><option value="11">Facilitateur #11</option><option value="12">Facilitateur #12</option><option value="13">Facilitateur #13</option><option value="14">Facilitateur #14</option><option value="15">Facilitateur #15</option><option value="16">Facilitateur #16</option></select>
+        <select id="fS" class="flt" aria-label="Statut"><option value="">Tous les statuts</option><option value="pending">🟠 À valider</option><option value="validated">🟢 Validée</option><option value="rejected">🔴 Refusée</option></select>
+        <select id="fA" class="flt" aria-label="Action"><option value="">Toutes les actions</option><option value="1">Présenter un sujet Impact en comité, réunion de secteur ou chez un client</option><option value="2">Animer un atelier ou une sensibilisation locale</option><option value="3">Mettre en place une action anti-gaspillage sur site</option><option value="4">Déployer une animation à impact sur site : Opération Stop Hunger, Aïda, SPS</option><option value="5">Mettre en œuvre une action de suppression des bouteilles plastiques sur site</option><option value="6">Obtenir 100% de réponse à la campagne 2027 SEA</option><option value="7">Créer et partager une bonne pratique ou un retour d'expérience</option><option value="8">Valoriser une initiative via un support de communication local</option><option value="9">Obtenir un témoignage client ou une mise en avant d'une action à impact</option><option value="10">Intervenir lors d'un événement, convention ou webinaire</option></select>
+        <select id="fFR" class="flt" aria-label="Code FR"></select>
+        <input type="date" id="fD1" class="flt" aria-label="Du">
+        <input type="date" id="fD2" class="flt" aria-label="Au">
+      </div>
+      <div class="tw"><table><thead><tr><th>Facilitateur</th><th>Sous-thème</th><th>Action</th><th>Date</th><th>Points</th><th>Statut</th><th>Décision le</th><th>Commentaire</th><th></th></tr></thead><tbody id="hist"></tbody></table></div></div>
+  </div>
+</section>
+</div>
+</main>
+
+<dialog id="lvl" style="text-align:center"><div id="lvlEm" style="font-size:3rem"></div><h2>LEVEL UP !</h2><p>Félicitations !</p><p>Vous avez atteint le niveau <b id="lvlName"></b>.</p><p><b id="lvlPts"></b> points atteints</p><button class="btn" id="lvlOk" type="button">Continuer</button></dialog>
+<div id="toast" role="status"></div>
+
+<script>
+/* ============ 1. CONFIGURATION & DONNÉES DE RÉFÉRENCE (modifiables) ============
+   Les points des actions sont définis ICI uniquement ; les déclarations sont stockées dans Supabase. */
+const CONFIG={
+  adminCode:'Impact2027',          // protection côté navigateur uniquement (à remplacer par une vraie authentification)
+ 
+  goal:250,                        // objectif utilisé pour la longueur des barres du classement
+};
+const SOUS_THEMES=['Sensibiliser','Déployer','Partager','Rayonner'];
+const ACTIONS=[
+  // condition = commentaire / livrable affiché dans le catalogue : à modifier librement
+  {id:1,sousTheme:'Sensibiliser',nom:'Présenter un sujet Impact en comité, réunion de secteur ou chez un client',points:15,condition:'Conditions à définir'},
+  {id:2,sousTheme:'Sensibiliser',nom:'Animer un atelier ou une sensibilisation locale',points:15,condition:'Conditions à définir'},
+  {id:3,sousTheme:'Déployer',nom:'Mettre en place une action anti-gaspillage sur site',points:25,condition:'Conditions à définir'},
+  {id:4,sousTheme:'Déployer',nom:'Déployer une animation à impact sur site : Opération Stop Hunger, Aïda, SPS',points:25,condition:'Conditions à définir'},
+  {id:5,sousTheme:'Déployer',nom:'Mettre en œuvre une action de suppression des bouteilles plastiques sur site',points:25,condition:'Conditions à définir'},
+  {id:6,sousTheme:'Partager',nom:'Obtenir 100% de réponse à la campagne 2027 SEA',points:15,condition:'Conditions à définir'},
+  {id:7,sousTheme:'Partager',nom:'Créer et partager une bonne pratique ou un retour d\'expérience',points:10,condition:'Partage ou création d\'une fiche impact avec action, process et résultat (ou objectif). Relai par Teams, mail...'},
+  {id:8,sousTheme:'Rayonner',nom:'Valoriser une initiative via un support de communication local',points:15,condition:'Conditions à définir'},
+  {id:9,sousTheme:'Rayonner',nom:'Obtenir un témoignage client ou une mise en avant d\'une action à impact',points:25,condition:'Conditions à définir'},
+  {id:10,sousTheme:'Rayonner',nom:'Intervenir lors d\'un événement, convention ou webinaire',points:20,condition:'Conditions à définir'}
+];
+// Gamification : tout est modifiable ici (seuils, noms, icônes, visuels, fleurs, nombre de participants)
+const GAMIFICATION_CONFIG={
+  totalParticipants:16,                         // « #X/16 » + identifiants anonymes 1..16
+  startLabel:'Terre à semer',                   // statut avant le premier seuil
+  postForest:{enabled:true,flowersPerValidatedAction:1,flowersDrawnMax:300}, // au-delà du dernier seuil : fleurs (dessin plafonné, compteur jamais)
+  levels:[ // l'illustration du niveau i se construit progressivement entre le seuil précédent et son seuil (visual = clé de VISUALS)
+    {id:'graine',name:'Graine',icon:'🌱',threshold:100,visual:'seed'},
+    {id:'pousse',name:'Pousse',icon:'🌿',threshold:200,visual:'sprout'},
+    {id:'arbre',name:'Arbre',icon:'🌳',threshold:300,visual:'tree'},
+    {id:'foret',name:'Forêt',icon:'🌲',threshold:500,visual:'forest'}
+  ]
+};
+const GC=GAMIFICATION_CONFIG,LEVELS=GC.levels;
+const STATUS={pending:{label:'🟠 À valider'},validated:{label:'🟢 Validée'},rejected:{label:'🔴 Refusée'}};
+
+/* ============ 2. DONNÉES STATIQUES (les déclarations viennent de Supabase) ============ */
+const data={participants:Array.from({length:GC.totalParticipants},(_,i)=>({id:i+1})),actions:ACTIONS.map(a=>({...a})),submissions:[]};
+
+/* ============ 3. SUPABASE : source de vérité unique (table « actions ») ============ */
+const SUPABASE_URL='https://zixdijezggdtuqiaeltu.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppeGRpamV6Z2dkdHVxaWFlbHR1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEyNzM5NDcsImV4cCI6MjEwNjg0OTk0N30.MYC_ZcA5z66NOCk0VKqPAMH6ugJPES_MdOPpXsmtB9A';
+// NB : ne pas nommer ce client « supabase » : le SDK du CDN déclare déjà ce nom global
+// Client de secours (API REST de Supabase, mêmes requêtes que le SDK) : utilisé si le script du CDN n'a pas pu être chargé (réseau, bloqueur, CDN inaccessible)
+function restClient(url,key){
+  const call=async(t,method,qs,body)=>{
+    try{
+      const r=await fetch(`${url}/rest/v1/${t}${qs}`,{method,headers:{apikey:key,Authorization:'Bearer '+key,'Content-Type':'application/json',Prefer:'return=representation'},body:body&&JSON.stringify(body)});
+      const j=await r.json().catch(()=>null);
+      if(!r.ok)return{data:null,error:{message:(j&&j.message)||r.statusText||('Erreur '+r.status),code:j&&j.code,hint:j&&j.hint,details:j&&j.details}};
+      return{data:j,error:null};
+    }catch(e){return{data:null,error:{message:String((e&&e.message)||e)}};}
+  };
+  return{from:t=>({
+    select:()=>call(t,'GET','?select=*'),
+    insert:rows=>({select:()=>call(t,'POST','?select=*',rows)}),
+    update:patch=>({eq:(c,v)=>({select:()=>call(t,'PATCH',`?${c}=eq.${encodeURIComponent(v)}&select=*`,patch)})})
+  })};
+}
+const loadScript=src=>new Promise(res=>{const s=document.createElement('script');s.src=src;s.onload=s.onerror=()=>res();document.head.appendChild(s);setTimeout(res,8000);});
+const sbClient=window.supabase?window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY):restClient(SUPABASE_URL,SUPABASE_KEY);
+const DEBUG=/[?&]debug\b/.test(location.search),dbg=e=>{if(DEBUG)toast('[debug] '+errText(e),15000);}; // diagnostic opt-in
+const STATUT_IN={en_attente:'pending',validee:'validated',refusee:'rejected'},STATUT_OUT={pending:'en_attente',validated:'validee',rejected:'refusee'};
+// Colonnes facultatives : si la table ne les possède pas, elles sont ignorées et le reste est enregistré normalement
+const OPTIONAL_COLS=['date_realisation','commentaire','commentaire_admin','date_decision'],absent=new Set();
+const errText=e=>[e.message,e.hint,e.code&&'('+e.code+')'].filter(Boolean).join(' ');
+async function withOptionalCols(row,run){
+  absent.forEach(c=>delete row[c]);
+  for(let i=0;i<8;i++){
+    const res=await run(row),msg=(res.error&&res.error.message)||'',m=/Could not find the '([^']+)' column/.exec(msg),nn=/null value in column "([^"]+)"/.exec(msg);
+    if(nn&&nn[1]!=='id'&&!(nn[1] in row)){console.warn('Colonne obligatoire non renseignée, valeur vide envoyée :',nn[1]);row[nn[1]]='';continue;}
+    if(!m||!OPTIONAL_COLS.includes(m[1]))return res;
+    console.warn('Colonne absente de la table, ignorée :',m[1]);absent.add(m[1]);delete row[m[1]];
+  }
+  return run(row);
+}
+let ignored=0;
+// Ligne Supabase → déclaration utilisée par l'interface (le facilitateur est identifié par son numéro, jamais par un nom)
+function fromRow(r){
+  const m=/(\d+)\s*$/.exec(r.facilitateur||''),p=m&&data.participants.find(x=>x.id===+m[1]);
+  if(!p){ignored++;console.warn('Ligne ignorée (facilitateur non anonymisé) :',r.id);return null;}
+  const a=data.actions.find(x=>x.nom===r.action);
+  return{id:r.id,participantId:p.id,facilitateur:anon(p),actionId:a?a.id:null,sousTheme:r.sub_theme||'',action:r.action||'',points:Number(r.points)||0,
+    status:STATUT_IN[r.statut]||'pending',date:String(r.date_realisation||r.created_at||'').slice(0,10),comment:r.commentaire||'',
+    codeFR:r.code_fr||'',decidedAt:r.date_decision||null,adminComment:r.commentaire_admin||''};
+}
+async function fetchActions(){
+  if(!sbClient){console.error('Bibliothèque Supabase non chargée');dbg({message:'Bibliothèque Supabase non chargée'});setNotice('Chargement des données...',true);return false;}
+  const{data:rows,error}=await sbClient.from('actions').select('*');
+  if(error){console.error(error);dbg(error);setNotice('Chargement des données...',true);return false;}
+  ignored=0;data.submissions=rows.map(fromRow).filter(Boolean);
+  setNotice('');$('#app').hidden=false;render();return true;
+}
+async function addAction(a){
+  if(!sbClient){console.error('Base de données indisponible');dbg({message:'Base de données indisponible'});return false;}
+  const row={facilitateur:a.facilitateur,code_fr:a.codeFR,sub_theme:a.subTheme,action:a.action,points:a.points,statut:'en_attente',date_realisation:a.date,commentaire:a.comment};
+  const{error}=await withOptionalCols(row,r=>sbClient.from('actions').insert([r]).select());
+  if(error){console.error(error);dbg(error);return false;}
+  await fetchActions();return true;
+}
+// Une validation MODIFIE la ligne existante (jamais de nouvelle ligne) : pas de double comptage
+async function updateActionStatus(id,statut,commentaireAdmin=''){
+  if(!sbClient){console.error('Base de données indisponible');dbg({message:'Base de données indisponible'});return false;}
+  const s=data.submissions.find(x=>x.id===id);
+  if(s&&STATUT_OUT[s.status]===statut)return true; // déjà dans cet état
+  const row={statut,date_decision:new Date().toISOString(),commentaire_admin:commentaireAdmin};
+  const{data:res,error}=await withOptionalCols(row,r=>sbClient.from('actions').update(r).eq('id',id).select());
+  if(error||!res||!res.length){console.error(error||'Aucune ligne modifiée (droits de la table ?)');dbg(error||{message:'Aucune ligne modifiée (droits de la table ?)'});return false;}
+  await fetchActions();return true;
+}
+
+/* ============ 4. LOGIQUE MÉTIER (aucun accès au DOM) ============ */
+const byId=(list,id)=>list.find(x=>x.id===id);
+const perim=s=>s.codeFR?esc('Code FR : '+s.codeFR):'';
+// Le score est TOUJOURS recalculé depuis les déclarations validées : pas de double comptage possible.
+function calculateScores(){
+  const sc={};data.participants.forEach(p=>sc[p.id]={points:0,count:0});
+  data.submissions.forEach(s=>{if(s.status==='validated'){sc[s.participantId].points+=s.points;sc[s.participantId].count++;}});
+  return sc;
+}
+function levelFor(pts){return LEVELS.filter(l=>pts>=l.threshold).length;} // 0 = aucun palier atteint
+function getLeaderboard(){
+  const sc=calculateScores();
+  return data.participants.map(p=>({...p,...sc[p.id],level:levelFor(sc[p.id].points)}))
+    .sort((a,b)=>b.points-a.points||a.id-b.id).map((p,_,arr)=>({...p,rank:1+arr.filter(q=>q.points>p.points).length})) // ex æquo = même rang;
+}
+const calculateScore=id=>calculateScores()[id].points;
+const calculateRank=id=>getLeaderboard().find(p=>p.id===id).rank;
+const getCurrentLevel=score=>LEVELS[levelFor(score)-1]||null;
+const getNextLevel=score=>LEVELS[levelFor(score)]||null;
+const getNextThreshold=score=>{const n=getNextLevel(score);return n?n.threshold:null;};
+// Croissance continue : le segment i va du seuil précédent au seuil i ; l'illustration du niveau i s'y construit (t : 0 → 1)
+function getGrowthProgress(score){
+  const i=levelFor(score),top=LEVELS[LEVELS.length-1];
+  if(i>=LEVELS.length)return{visual:top.visual,t:1,beyond:true,level:top};
+  const a=i?LEVELS[i-1].threshold:0,b=LEVELS[i].threshold;
+  return{visual:LEVELS[i].visual,t:(score-a)/(b-a),beyond:false,level:i?LEVELS[i-1]:null};
+}
+const gaugeMax=score=>Math.max(LEVELS[LEVELS.length-1].threshold,score); // la jauge s'étend au-delà du dernier seuil
+// Fleurs : 1 par action validée APRÈS celle qui atteint le dernier seuil, recalculé depuis l'historique (aucun compteur stocké)
+function calculateFlowers(id){
+  const P=GC.postForest,top=LEVELS[LEVELS.length-1].threshold;if(!P.enabled)return 0;
+  const v=data.submissions.filter(s=>s.participantId===id&&s.status==='validated')
+    .sort((a,b)=>String(a.decidedAt||a.date).localeCompare(String(b.decidedAt||b.date))||String(a.id).localeCompare(String(b.id),'fr',{numeric:true}));
+  let sum=0;for(let i=0;i<v.length;i++){sum+=v[i].points;if(sum>=top)return(v.length-i-1)*P.flowersPerValidatedAction;}
+  return 0;
+}
+function getParticipantStats(id){
+  const m=data.submissions.filter(s=>s.participantId===id),n=st=>m.filter(s=>s.status===st).length;
+  return{declared:m.length,validated:n('validated'),pending:n('pending'),refused:n('rejected')};
+}
+async function exportToExcel(){
+  if(typeof XLSX==='undefined')await loadScript('https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js'); // CDN de secours
+  if(typeof XLSX==='undefined'){console.error('Bibliothèque Excel non chargée');return;}
+  const cols=['Facilitateur','Sous-thème','Action','Points','Date','Code FR','Statut action','Commentaire'];
+  const rows=[...data.submissions].sort((a,b)=>a.participantId-b.participantId||a.date.localeCompare(b.date))
+    .map(s=>({Facilitateur:s.facilitateur,'Sous-thème':s.sousTheme,Action:s.action,Points:s.points,Date:fmt(s.date),'Code FR':s.codeFR,'Statut action':STATUS[s.status].label.replace(/^\S+\s/,''),Commentaire:s.comment}));
+  const ws=XLSX.utils.json_to_sheet(rows,{header:cols});ws['!cols']=[18,14,60,8,12,12,14,40].map(wch=>({wch}));
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Historique des actions');
+  XLSX.writeFile(wb,'Impact_2027.xlsx');
+}
+// Authentification : code d'accès simple, à remplacer par une vraie connexion.
+const Auth={login(code){if(code!==CONFIG.adminCode)return false;ui.admin=true;return true;}};
+
+/* ============ 5. AFFICHAGE ============ */
+const $=s=>document.querySelector(s);
+const esc=t=>String(t??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=iso=>iso?iso.slice(0,10).split('-').reverse().join('/'):'';
+const opts=(list,sel,label=x=>x.nom)=>list.map(x=>`<option value="${x.id}"${x.id==sel?' selected':''}>${esc(label(x))}</option>`).join('');
+const badge=st=>`<span class="badge ${st}">${STATUS[st].label}</span>`;
+const ui={tab:'challenge',me:1,admin:false},shown={};
+const medals=['🥇','🥈','🥉'];
+
+function countUp(el,from,to){const t0=performance.now();(function f(t){const k=Math.min(1,(t-t0)/700);el.textContent=Math.round(from+(to-from)*k);if(k<1)requestAnimationFrame(f);})(t0);}
+function animateBars(){requestAnimationFrame(()=>requestAnimationFrame(()=>document.querySelectorAll('.bar i[data-w]').forEach(i=>i.style.width=i.dataset.w+'%')));}
+function setNotice(msg,retry=false){$('#notice').hidden=!msg;$('#noticeMsg').textContent=msg;$('#retry').hidden=!retry;}
+function toast(m,ms=3500){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('on'),ms);}
+
+const anon=p=>'Facilitateur #'+p.id; // l'interface participant n'affiche jamais de nom
+const shownPlant={};
+const lerp=(a,b,t)=>a+(b-a)*t,cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)),PC={leaf:'var(--g2)',leaf2:'var(--g)',soil:'#8b6b4a',trunk:'#6b4f35',petal:'#f4b6c8',core:'#f2c94c'};
+const circ=(x,y,r,f,o=1)=>`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(1)}" fill="${f}" opacity="${o}"/>`;
+const leafSvg=(x,y,d,s)=>d?`<ellipse cx="${x+d*s}" cy="${y}" rx="${s}" ry="${s*.45}" transform="rotate(${-d*28} ${x} ${y})" fill="${PC.leaf}"/>`:`<ellipse cx="${x}" cy="${y-s*.7}" rx="${s*.45}" ry="${s}" fill="${PC.leaf}"/>`;
+const seedSvg=(k,t)=>{if(k<.05)return'';const rx=19*k,ry=14*k;return`<ellipse cx="150" cy="${290-ry}" rx="${rx}" ry="${ry}" fill="${PC.trunk}"/>`+(t>.75?`<path d="M150 ${290-ry*1.9} l${(t-.75)*40} ${ry*.8} l${-(t-.75)*30} ${ry*.8}" stroke="${PC.leaf}" stroke-width="2" fill="none"/>`:'')+(t>.9?circ(150,290-ry*2.5,2+(t-.9)*30,PC.leaf,.9):'');};
+const stemSvg=(h,w,e,o=1)=>`<rect x="${150-w/2}" y="${290-h}" width="${w}" height="${h}" rx="${w/2}" fill="${PC.leaf2}"/>`+(e>.05&&o>.02?`<g opacity="${o}">`+leafSvg(150,290-h*.55,-1,26*e)+leafSvg(150,290-h*.8,1,30*e)+leafSvg(150,290-h,0,22*e)+'</g>':'');
+const trunkSvg=(x,h,w)=>`<rect x="${x-w/2}" y="${290-h}" width="${w}" height="${h}" rx="${w/3}" fill="${PC.trunk}"/>`;
+const canopySvg=(x,y,r)=>r<1?'':circ(x-r*.6,y+r*.3,r*.7,PC.leaf2)+circ(x+r*.6,y+r*.3,r*.7,PC.leaf2)+circ(x,y-r*.2,r,PC.leaf)+circ(x,y+r*.4,r*.7,PC.leaf);
+const treeSvg=(x,h,w,r)=>trunkSvg(x,h,w)+canopySvg(x,290-h,r);
+const bushSvg=(x,s)=>s<.05?'':`<rect x="${x-4}" y="${290-55*s}" width="8" height="${55*s}" rx="3" fill="${PC.trunk}"/>`+circ(x-35*s,290-55*s,35*s,PC.leaf2)+circ(x+35*s,290-55*s,35*s,PC.leaf2)+circ(x,290-70*s,50*s,PC.leaf);
+const forestTrees=t=>{const s=lerp(1,1.1,t),u=Math.pow(cl((t-.1)/.9),.8),side=(x,k)=>({x,h:150*k*u,w:20*k*u,r:64*k*u});return[{x:150,h:150*s,w:20*s,r:64*s},side(80,.75),side(220,.8)];};
+// Fleurs posées en spirale sur les couronnes ; la taille diminue quand leur nombre augmente, rien ne déborde
+function flowersSvg(T,n){
+  const MAX=GC.postForest.flowersDrawnMax,CAP=MAX/3,N=Math.min(n,MAX),fr=cl(4-n/100,2.2,4);let o='';
+  for(let i=0;i<N;i++){const k=T[i%3],j=Math.floor(i/3),rho=Math.sqrt((j+.5)/CAP)*.82*k.r,a=j*2.399963+(i%3)*2;
+    const x=k.x+rho*Math.cos(a),y=290-k.h+k.r*.1+rho*Math.sin(a);o+=circ(x,y,fr,PC.petal)+circ(x,y,fr*.4,PC.core);}
+  return o;
+}
+const VISUALS={ // t = avancement 0..1 vers l'illustration complète du niveau
+  seed:t=>seedSvg(lerp(.38,1,t),t),
+  sprout:t=>seedSvg(lerp(1,.8,t),1)+stemSvg(lerp(4,115,t),lerp(3,6,t),cl((t-.15)/.85)),
+  tree:t=>seedSvg(lerp(.8,0,cl(t*2)),1)+stemSvg(lerp(115,150,t),lerp(6,20,t),1,1-cl(t*2))+`<g opacity="${cl(t*2)}">${trunkSvg(150,lerp(115,150,t),lerp(6,20,t))}</g>`+canopySvg(150,290-lerp(115,150,t),64*Math.pow(t,.8)),
+  forest:(t,fl)=>{const T=forestTrees(t),v=cl((t-.5)*2)*.8;return bushSvg(45,v)+bushSvg(255,v)+treeSvg(T[1].x,T[1].h,T[1].w,T[1].r)+treeSvg(T[2].x,T[2].h,T[2].w,T[2].r)+treeSvg(T[0].x,T[0].h,T[0].w,T[0].r)+flowersSvg(T,fl||0);}
+};
+function plantSVG(score,fl=0){const g=getGrowthProgress(score);
+  return`<svg viewBox="0 0 300 340" role="img" aria-label="Plante en croissance" data-visual="${g.visual}" data-t="${g.t.toFixed(2)}"><rect width="300" height="340" rx="14" fill="var(--gl)"/><ellipse cx="150" cy="298" rx="125" ry="14" fill="${PC.soil}" opacity=".35"/>${VISUALS[g.visual](g.t,g.beyond?fl:0)}</svg>`;}
+// Croissance fluide d'un score à l'autre (le dessin est recalculé à chaque image)
+function animateGrowth(from,to,done,fl=0){
+  const art=$('#plantArt'),id=animateGrowth.id=(animateGrowth.id||0)+1;if(!art)return;
+  if(from===to){art.innerHTML=plantSVG(to,fl);done&&done();return;}
+  const t0=performance.now();
+  (function f(t){if(id!==animateGrowth.id)return;const k=Math.min(1,(t-t0)/1400);art.innerHTML=plantSVG(from+(to-from)*(1-Math.pow(1-k,3)),fl);if(k<1)requestAnimationFrame(f);else done&&done();})(t0);
+}
+// État purement visuel (dernier niveau fêté par facilitateur) : ce n'est pas une donnée métier, les scores restent dans Supabase
+const SEEN_KEY='impact2027-ui-niveau-vu';
+const getSeen=id=>{try{return JSON.parse(localStorage.getItem(SEEN_KEY)||'{}')[id];}catch(e){}};
+const setSeen=(id,l)=>{try{const o=JSON.parse(localStorage.getItem(SEEN_KEY)||'{}');o[id]=l;localStorage.setItem(SEEN_KEY,JSON.stringify(o));}catch(e){}};
+function checkLevelUp(id,score){const l=levelFor(score),seen=getSeen(id);setSeen(id,l);if(seen!==undefined&&l>seen&&ui.tab==='challenge')triggerLevelUp(l-1);}
+function triggerLevelUp(i){
+  const l=LEVELS[i],s=$('#plantArt svg');
+  if(s){s.classList.remove('pop');void s.getBoundingClientRect();s.classList.add('pop');s.insertAdjacentHTML('beforeend','<circle class="ring" cx="150" cy="250" r="70"/><circle class="ring" style="animation-delay:.3s" cx="150" cy="250" r="70"/>');}
+  $('#lvlEm').textContent=l.icon;$('#lvlName').textContent=l.name;$('#lvlPts').textContent=l.threshold;
+  if(!$('#lvl').open)$('#lvl').showModal();
+}
+function renderProfile(){
+  const p=getLeaderboard().find(x=>x.id===ui.me),cur=getCurrentLevel(p.points);
+  $('#profile').innerHTML=`<div><label for="me" style="margin-top:0">Participant</label><select id="me">${opts(data.participants,ui.me,anon)}</select></div>
+    <div style="text-align:center;padding:14px 0"><h2 style="margin:0;font-size:1.5rem">${anon(p)}</h2><div class="pts" style="font-size:3.2rem">#${p.rank}/${GC.totalParticipants}</div><small>au classement</small></div>
+    <div style="text-align:center"><b>${cur?cur.icon+' '+cur.name:GC.startLabel}</b></div>
+    <button class="btn big" id="addBtn" type="button" style="margin-bottom:0">＋ Ajouter une action</button>`;
+  $('#addBtn').onclick=openAddAction;
+}
+function renderProgressBar(score){
+  const max=gaugeMax(score);
+  return`<div style="position:relative;margin:14px 14px 38px"><div class="bar"><i data-w="${score/max*100}"></i></div>${LEVELS.map(l=>`<span class="ms${score>=l.threshold?' on':''}" style="left:${l.threshold/max*100}%"><b></b><small>${l.icon} ${l.threshold}</small></span>`).join('')}</div>`;
+}
+function renderPersonalDashboard(){
+  const p=getLeaderboard().find(x=>x.id===ui.me),cur=getCurrentLevel(p.points),next=getNextLevel(p.points),st=getParticipantStats(p.id),fl=calculateFlowers(p.id),top=LEVELS[LEVELS.length-1];
+  $('#dash').innerHTML=`<h2>Mon tableau de bord</h2>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:8px"><div><small>Niveau actuel</small><br><b style="font-size:1.2rem">${cur?cur.icon+' '+cur.name:GC.startLabel}</b></div>
+    <div class="pts" style="font-size:2.2rem"><span id="pp">0</span> <small style="font-size:1rem;font-weight:400">points validés</small></div></div>
+    ${renderProgressBar(p.points)}
+    <small>${next?`${next.threshold-p.points} points avant ${next.name} (${next.threshold} pts)`:`${top.icon} ${top.name} acquise · +${p.points-top.threshold} points supplémentaires · 🌸 ${fl} fleur${fl>1?'s':''} supplémentaire${fl>1?'s':''}`}</small>
+    <div class="stats" style="margin:14px 0 0">${[['📝','Actions déclarées',st.declared,''],['✅','Actions validées',st.validated,''],['⏳','Actions en attente',st.pending,'w'],['❌','Actions refusées',st.refused,'']].map(([i,l,v,c])=>`<div class="st ${c}">${i} <small>${l}</small><b>${v}</b></div>`).join('')}</div>
+    <h2 style="margin:16px 0 4px">Mes actions</h2><div class="tw scroll" id="mine"></div>`;
+  const el=$('#pp');
+  if(ui.tab==='challenge'){countUp(el,shown[p.id]??0,p.points);shown[p.id]=p.points;}else el.textContent=p.points;
+}
+function renderPlant(){
+  const p=getLeaderboard().find(x=>x.id===ui.me),cur=getCurrentLevel(p.points),next=getNextLevel(p.points),fl=calculateFlowers(p.id);
+  $('#plant').innerHTML=`<h2>🌱 Ma plante</h2><div id="plantArt" style="flex:1"></div>
+    <div style="text-align:center;margin-top:10px"><b>${cur?cur.icon+' '+cur.name:GC.startLabel}${!next&&fl?` · 🌸 ${fl}`:''}</b><br><small>${next?`Prochain niveau : ${next.name} à ${next.threshold} points`:'Palier maximal atteint'}</small></div>`;
+  let from=p.points;
+  if(ui.tab==='challenge'){from=shownPlant[p.id]??0;shownPlant[p.id]=p.points;}
+  animateGrowth(from,p.points,()=>{if(ui.tab==='challenge')checkLevelUp(p.id,p.points);},fl);
+}
+function renderMine(){
+  const all=data.submissions.filter(s=>s.participantId===ui.me),np=all.filter(s=>s.status==='pending').length;
+  const ok=all.filter(s=>s.status==='validated').sort((a,b)=>b.date.localeCompare(a.date));
+  $('#mine').innerHTML=ok.length?`<table><thead><tr><th>Action</th><th>Sous-thème</th><th>Date</th><th>Statut</th><th>Points</th></tr></thead><tbody>${ok.map(s=>`<tr><td>${esc(s.action)}</td><td>${esc(s.sousTheme)}</td><td>${fmt(s.date)}</td><td>${badge('validated')}</td><td>+${s.points}</td></tr>`).join('')}</tbody></table>`:'<small>Aucune action validée pour le moment.</small>';
+  if(np)$('#mine').insertAdjacentHTML('beforeend',`<small style="display:block;margin-top:8px">⏳ ${np} action(s) en attente de validation</small>`);
+}
+function renderCatalog(){
+  $('#catalog').innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:0 28px">'+SOUS_THEMES.map(t=>`<div><small><b>${t}</b></small>${data.actions.filter(a=>a.sousTheme===t).map(a=>`<div class="row"><div>${esc(a.nom)}<br><small>${esc(a.condition)}</small></div><div><b>+${a.points}</b></div></div>`).join('')}</div>`).join('')+'</div>';
+}
+function renderAdmin(){
+  $('#adminGate').hidden=ui.admin;$('#adminBody').hidden=!ui.admin;if(!ui.admin)return;
+  const S=data.submissions,pend=S.filter(s=>s.status==='pending'),val=S.filter(s=>s.status==='validated');
+  $('#stats').innerHTML=[['👥','Facilitateurs',data.participants.length,''],['🎯','Actions déclarées',S.length,''],['🟠','En attente',pend.length,'w'],
+    ['✅','Actions validées',val.length,''],['❌','Actions refusées',S.filter(s=>s.status==='rejected').length,''],['⭐','Points distribués',val.reduce((a,s)=>a+s.points,0).toLocaleString('fr-FR'),'']]
+    .map(([i,l,v,c])=>`<div class="st ${c}">${i} <small>${l}</small><b>${v}</b></div>`).join('');
+  $('#todoCount').textContent=pend.length;
+  $('#todo').innerHTML=pend.sort((a,b)=>a.date.localeCompare(b.date)||a.id-b.id).map(s=>`<tr><td>${esc(s.facilitateur)}</td><td>${esc(s.sousTheme)}</td>
+    <td>${esc(s.action)}<br><small>${[esc(s.comment),perim(s)].filter(Boolean).join('<br>')}</small></td>
+    <td>${fmt(s.date)}</td><td>+${s.points}</td><td>${badge('pending')}</td>
+    <td><button class="btn s" data-a="ok" data-id="${s.id}">✅ Valider</button> <button class="btn r s" data-a="ko" data-id="${s.id}">❌ Refuser</button></td></tr>`).join('')
+    ||'<tr><td colspan="7" class="mut">Aucune action en attente. Tout est à jour 🎉</td></tr>';
+  refreshFilterOptions();renderHistory();
+}
+function refreshFilterOptions(){
+  [['fFR','codeFR','Tous les codes FR']].forEach(([id,k,all])=>{
+    const el=$('#'+id),cur=el.value,vals=[...new Set(data.submissions.map(s=>s[k]).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'fr',{numeric:true}));
+    el.innerHTML=`<option value="">${all}</option>`+vals.map(v=>`<option${v===cur?' selected':''}>${esc(v)}</option>`).join('');
+  });
+}
+function renderHistory(){
+  const v=k=>$('#'+k).value;
+  const rows=data.submissions.filter(s=>(!v('fP')||s.participantId==v('fP'))&&(!v('fS')||s.status===v('fS'))&&(!v('fA')||s.actionId==v('fA'))&&(!v('fFR')||s.codeFR===v('fFR'))&&(!v('fD1')||s.date>=v('fD1'))&&(!v('fD2')||s.date<=v('fD2')))
+    .sort((a,b)=>b.date.localeCompare(a.date)||b.id-a.id);
+  $('#histCount').textContent='— '+rows.length+' résultat(s)';
+  $('#hist').innerHTML=rows.map(s=>`<tr><td>${esc(s.facilitateur)}</td><td>${esc(s.sousTheme)}</td><td>${esc(s.action)}</td><td>${fmt(s.date)}</td><td>+${s.points}</td>
+    <td>${badge(s.status)}</td><td>${fmt(s.decidedAt)}</td><td>${[esc(s.comment),perim(s),s.adminComment&&esc('Admin : '+s.adminComment)].filter(Boolean).join('<br>')}</td>
+    <td>${s.status==='validated'?`<button class="btn r s" data-a="ko" data-id="${s.id}">❌ Refuser</button>`:s.status==='rejected'?`<button class="btn s" data-a="ok" data-id="${s.id}">✅ Valider</button>`:''}</td></tr>`).join('')
+    ||'<tr><td colspan="9" class="mut">Aucune action ne correspond à ces filtres.</td></tr>';
+}
+function render(){renderProfile();renderPersonalDashboard();renderPlant();renderMine();renderCatalog();renderAdmin();animateBars();}
+
+/* ============ 6. ÉVÉNEMENTS ============ */
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
+  ui.tab=b.dataset.tab;
+  document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x===b));
+  $('#challenge').hidden=ui.tab!=='challenge';$('#admin').hidden=ui.tab!=='admin';render();
+});
+document.addEventListener('change',e=>{if(e.target.id==='me'){ui.me=+e.target.value;$('#fpart').value=ui.me;render();}});
+$('#gateForm').onsubmit=e=>{
+  e.preventDefault();
+  if(Auth.login($('#code').value)){$('#code').value='';$('#gateErr').textContent='';render();}
+  else{$('#gateErr').textContent='Code incorrect. Veuillez réessayer.';$('#code').select();}
+};
+document.querySelectorAll('.flt').forEach(el=>el.oninput=renderHistory);
+
+const fillActions=()=>$('#fact').innerHTML=opts(data.actions.filter(a=>a.sousTheme===$('#fsub').value),'',a=>`${a.nom} — +${a.points} points`);
+$('#fsub').onchange=fillActions;
+function openAddAction(){ // le formulaire est affiché en bas de page : le bouton y amène et place le curseur sur la première étape
+  const f=$('#dlg');f.scrollIntoView({behavior:'smooth',block:'start'});
+  f.classList.remove('flash');void f.offsetWidth;f.classList.add('flash');
+  setTimeout(()=>$('#fsub').focus({preventScroll:true}),450);
+}
+function initForm(){ // formulaire affiché en bas de page : listes + date du jour
+  $('#fpart').innerHTML=opts(data.participants,ui.me,anon);
+  $('#fsub').innerHTML=SOUS_THEMES.map(t=>`<option>${t}</option>`).join('');
+  fillActions();$('#fdate').value=new Date().toLocaleDateString('sv-SE');
+}
+$('#frm').onsubmit=async e=>{
+  e.preventDefault();
+  const p=byId(data.participants,+$('#fpart').value),a=byId(data.actions,+$('#fact').value),btn=$('#frm [type=submit]');
+  btn.disabled=true;
+  let ok=false;try{ok=await addAction({facilitateur:anon(p),codeFR:$('#ffr').value.trim(),
+    subTheme:a.sousTheme,action:a.nom,points:a.points,date:$('#fdate').value,comment:$('#fcom').value.trim()});}catch(err){console.error(err);dbg(err);}
+  btn.disabled=false;
+  if(ok){ui.me=p.id;$('#frm').reset();initForm();render();toast('Action enregistrée. Elle sera comptabilisée après validation.');}
+};
+document.addEventListener('click',async e=>{
+  const b=e.target.closest('[data-a]');if(!b)return;
+  const s=data.submissions.find(x=>String(x.id)===b.dataset.id);if(!s)return;
+  const valider=b.dataset.a==='ok';let r='';
+  if(!valider){r=prompt('Raison du refus (facultatif) :');if(r===null)return;r=r.trim();}
+  b.disabled=true;
+  let ok=false;try{ok=await updateActionStatus(s.id,valider?'validee':'refusee',r);}catch(err){console.error(err);dbg(err);}
+  if(ok)toast(valider?`Action validée : +${s.points} pts pour ${s.facilitateur}.`:'Action refusée. Aucun point attribué.');else b.disabled=false;
+});
+$('#export').onclick=exportToExcel;
+
+/* ============ 7. DÉMARRAGE ============ */
+$('#fP').innerHTML='<option value="">Tous les participants</option>'+opts(data.participants,'',anon);
+$('#fA').innerHTML='<option value="">Toutes les actions</option>'+opts(data.actions);
+$('#fS').innerHTML='<option value="">Tous les statuts</option>'+Object.entries(STATUS).map(([k,v])=>`<option value="${k}">${v.label}</option>`).join('');
+initForm();
+$('#retry').onclick=fetchActions;
+$('#lvlOk').onclick=()=>$('#lvl').close();
+setNotice('Chargement des données...');
+fetchActions();
+</script>
+
+
+</body></html>
